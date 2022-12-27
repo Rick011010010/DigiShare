@@ -53,7 +53,7 @@ const digi: WabaTemplate[] = [
             'https://itb.itinarea.com/storage/static/DIGISHARE%20-%20Produits.pdf',
           ],
           pdfImg:[
-            'https://f.hellowork.com/blogdumoderateur/2013/07/pdf.png'
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png'
           ]
         },
         format: 'DOCUMENT',
@@ -100,6 +100,9 @@ const digi: WabaTemplate[] = [
           header_handle: [
             'https://pbs.twimg.com/profile_images/638143991314182148/DtifCFKc_400x400.png',
           ],
+          pdfImg:[
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png'
+          ]
         },
         format: 'DOCUMENT',
         type: 'HEADER',

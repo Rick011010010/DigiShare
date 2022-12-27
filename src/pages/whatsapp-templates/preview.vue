@@ -86,6 +86,7 @@ let output = computed(() => {
 
 // )
 
+//
 // let BodyTextRes = computed(() => {
 //   let r = body?.value.text
 //   for(const key of bodyInput.value ){
@@ -100,7 +101,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
 
 <template>
   <v-container fluid>
-    <v-row>
+    <v-row class="grid">
       <v-col cols="12" class="">
         <v-select
           v-model="selected_template"
@@ -108,37 +109,17 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
           :items="waba_templates"
           item-text="name"
           return-object
+          class=""
         ></v-select>
       </v-col>
 
-      <v-col class="">
-        <v-col col="1" class="d-flex justify-center mb-6">
-          <v-card
-            class="px-10 pb-2"
-            width="600"
-            v-if="selected_template && bodyInput"
-          >
-            <v-card-text>
-              <div>whatsapp templates</div>
-              <p class="text-h5 text--primary">modifier dans le modèle</p>
-            </v-card-text>
-            <div class="">
-              <v-text-field
-                v-for="(input, i) in bodyText"
-                :key="i"
-                v-model="bodyText[i]"
-                color="success"
-                label=""
-                hide-details="auto"
-              ></v-text-field>
-            </div>
-          </v-card>
-
+      <v-row class="">
+        <v-col col="6 ">
           <v-app-bar
-            absolute
+
             width="390"
             height="705"
-            class="ml-16 mt-16 rounded-xl pt-16 pr-2"
+            class="ml-16  rounded-xl pt-16 pr-2"
             src="/phone3.png"
             fade-img-on-scroll
             scroll-target="#scrolling-techniques-3"
@@ -154,11 +135,12 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                 color="grey lighten-3"
                 absolute
                 max-width="400"
+                fab
                 height="100"
                 class="mx-auto mt-16 rounded-t-xl"
               >
                 <template v-if="header">
-                  <template v-if="(header.format === 'IMAGE')" height="100">
+                  <template v-if="header.format === 'IMAGE'" height="100">
                     <v-img
                       class="mx-auto"
                       height="100"
@@ -167,14 +149,13 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                     ></v-img>
                   </template>
 
-                  <template v-if="(header.format === 'DOCUMENT')">
+                  <template v-if="header.format === 'DOCUMENT'">
                     <v-img
                       class="mx-auto"
                       height="100"
                       width="200"
                       v-bind:src="header.example.pdfImg[0]"
                     ></v-img>
-
                   </template>
                 </template>
 
@@ -182,7 +163,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                   <v-list-item>
                     <v-list-item-content max-height="100" v-if="body">
                       <v-card-text
-                        class="text-h7 font-weight-medium d-inline-block"
+                        class="text-h7 font-weight-thin d-inline-block"
                         style="max-width: 400px; max-height: 96px"
                       >
                         {{ bodyInput && body.example ? output : body.text }}
@@ -232,7 +213,29 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
             </v-col>
           </v-app-bar>
         </v-col>
-      </v-col>
+        <v-col col="6" class="d-flex justify-center mb-6">
+          <v-card
+            class="px-10 pb-2"
+            width="600"
+            v-if="selected_template && bodyInput"
+          >
+            <v-card-text>
+              <div>whatsapp templates</div>
+              <p class="text-h5 text--primary">modifier dans le modèle</p>
+            </v-card-text>
+            <div class="">
+              <v-text-field
+                v-for="(input, i) in bodyText"
+                :key="i"
+                v-model="bodyText[i]"
+                color="success"
+                label=""
+                hide-details="auto"
+              ></v-text-field>
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-row>
   </v-container>
 </template>

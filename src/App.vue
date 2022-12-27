@@ -2,6 +2,8 @@
 import { browsersRegex } from 'virtual:supported-browsers'
 import { useChartGlobalOption } from '@/composables/useECharts'
 
+
+
 const { t } = useI18n()
 useChartGlobalOption()
 const isValidBrowser = ref(true)
