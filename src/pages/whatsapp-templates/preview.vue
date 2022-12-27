@@ -22,6 +22,9 @@ const buttons = computed(() => {
 const footer = computed(() => {
   return selected_template.value?.components.find((e) => e.type === 'FOOTER')
 })
+// const url = computed(() => {
+//   return selected_template.value?.components.buttons.value?.find((e) => e.type === 'URL')
+// })
 
 // let res = body.text.match(/{{\W+}}/)
 // console.log(res)
@@ -108,10 +111,10 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
         ></v-select>
       </v-col>
 
-      <v-row class="">
+      <v-col class="">
         <v-col col="1" class="d-flex justify-center mb-6">
           <v-card
-            class="px-10 pb-2 "
+            class="px-10 pb-2"
             width="600"
             v-if="selected_template && bodyInput"
           >
@@ -135,7 +138,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
             absolute
             width="390"
             height="705"
-            class="ml-16 my-16 rounded-xl pt-10 pr-2"
+            class="ml-16 mt-16 rounded-xl pt-16 pr-2"
             src="/phone3.png"
             fade-img-on-scroll
             scroll-target="#scrolling-techniques-3"
@@ -173,7 +176,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                   <v-list-item>
                     <v-list-item-content max-height="100" v-if="body">
                       <v-card-text
-                        class="text-h10 font-weight-medium d-inline-block"
+                        class="text-h7 font-weight-medium d-inline-block"
                         style="max-width: 400px; max-height: 100px"
                       >
                         {{ bodyInput && body.example ? output : body.text }}
@@ -185,7 +188,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                   <v-divider inset></v-divider>
                   <v-list-item v-if="footer">
                     <v-list-item-content>
-                      <v-list-item-title class="text-h24">{{
+                      <v-list-item-title class="text-h16">{{
                         footer.text
                       }}</v-list-item-title>
                     </v-list-item-content>
@@ -200,6 +203,14 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                         depressed
                         :key="i"
                       >
+                        <v-icon class="mr-1" size="20" v-if="button.type === 'PHONE_NUMBER'"> mdi-phone </v-icon>
+                        <v-icon
+                          class="mr-1"
+                          size="20"
+                          v-if="button.type === 'URL'"
+                        >
+                          mdi-web
+                        </v-icon>
                         {{ button.text }}
                       </v-btn>
                     </v-list-item-content>
@@ -209,7 +220,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
             </v-col>
           </v-app-bar>
         </v-col>
-      </v-row>
+      </v-col>
     </v-row>
   </v-container>
 </template>

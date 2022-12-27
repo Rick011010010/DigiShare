@@ -6,6 +6,7 @@ import { useDark } from '@vueuse/core'
 import en from 'vuetify/lib/locale/en'
 import zh from 'vuetify/lib/locale/zh-Hans'
 import type { InstallPlugin } from '@/utils/types'
+import '@mdi/font/css/materialdesignicons.css'
 
 const theme = {
   primary: localStorage.getItem('theme-primary') || '#0096C7',
