@@ -98,7 +98,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" class="">
         <v-select
           v-model="selected_template"
           label="select one of waba templates"
@@ -111,7 +111,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
       <v-row class="">
         <v-col col="1" class="d-flex justify-center mb-6">
           <v-card
-            class="px-10 pb-2"
+            class="px-10 pb-2 "
             width="600"
             v-if="selected_template && bodyInput"
           >
@@ -135,26 +135,24 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
             absolute
             width="390"
             height="705"
-            class="ml-16 my-16 rounded-xl pt-10"
-            src="/phoneTemplate.png"
+            class="ml-16 my-16 rounded-xl pt-10 pr-2"
+            src="/phone3.png"
             fade-img-on-scroll
             scroll-target="#scrolling-techniques-3"
             shrink-on-scroll
             prominent
           >
             <template v-slot:img="{ props }">
-              <v-img v-bind="props" width="380"></v-img>
+              <v-img v-bind="props" width="500" cover></v-img>
             </template>
 
             <v-col v-if="selected_template" cols="12">
               <v-card
-                color="blue-grey darken-4"
-                dense
+                color="grey lighten-3"
                 absolute
-                dark
-                max-width="280"
+                max-width="400"
                 height="100"
-                class="mx-auto mt-16 rounded-t-lg"
+                class="mx-auto mt-16 rounded-t-xl"
               >
                 <template v-if="header">
                   <template v-if="(header.format = 'IMAGE')" height="100">
