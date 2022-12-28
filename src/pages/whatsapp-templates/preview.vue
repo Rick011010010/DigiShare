@@ -6,7 +6,7 @@ import { ref, watch, whatchEffect, computed } from 'vue'
 
 const waba_templates = ref<WabaTemplate[]>([])
 const selected_template = ref<WabaTemplate>()
-// const bodyText = ref()
+
 const body = computed(() => {
   return selected_template.value?.components.find((e) => e.type === 'BODY')
 })
@@ -22,27 +22,30 @@ const buttons = computed(() => {
 const footer = computed(() => {
   return selected_template.value?.components.find((e) => e.type === 'FOOTER')
 })
-// const url = computed(() => {
-//   return selected_template.value?.components.buttons.value?.find((e) => e.type === 'URL')
-// })
 
-// let res = body.text.match(/{{\W+}}/)
-// console.log(res)
 
 // rgx of the {{1}}, {{2}} ...
 const regex = /{{\w+}}/g
 
-console.log(body?.value?.text, 'body')
+
 
 // the match of the rgx in the bodyTemplate
 const bodyInput = computed(() => {
   return body?.value.text.match(regex)
 })
+// the variable indice in the default values
+let variablIndice = computed(() => {
+  return bodyInput?.value.map((n) => n.slice(2, -2) - 1)
+})
 
 // default value of the bodyText
-const bodyText = computed(() => {
-  return numbers?.value?.map((n) => body?.value?.example?.body_text[n])
+let bodyText = computed(() => {
+  return variablIndice?.value?.map((n) => body?.value?.example?.body_text[n])
 })
+
+function defaultVal(key: string) {
+  return bodyText.value[key.slice(2, -2) - 1][0]
+}
 
 // the jason of the mustach data
 const vars = computed(() => {
@@ -53,22 +56,14 @@ const vars = computed(() => {
   return obj
 })
 
-let numbers = computed(() => {
-  return bodyInput?.value.map((n) => n.slice(2, -2) - 1)
-})
-
-function defaultVal(key: string) {
-  return bodyText.value[key.slice(2, -2) - 1][0]
-}
 
 // the body resulte by using the mustach method
 let output = computed(() => {
   return render(body?.value.text, vars?.value)
 })
 
-// function changeBodyText () {
 
-// }
+
 
 // function   watch: {
 //   bodyText: {
@@ -80,13 +75,14 @@ let output = computed(() => {
 //     }
 //   }
 
+
 // for (const key of defaultVal.value) {
 //   defaultVal(key) = inputModel(key)
 //   }
 
 // )
 
-//
+// the result body by using replace method
 // let BodyTextRes = computed(() => {
 //   let r = body?.value.text
 //   for(const key of bodyInput.value ){
@@ -138,6 +134,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                 fab
                 height="100"
                 class="mx-auto mt-16 rounded-t-xl"
+                :elevation="4"
               >
                 <template v-if="header">
                   <template v-if="header.format === 'IMAGE'" height="100">
@@ -159,7 +156,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                   </template>
                 </template>
 
-                <v-list two-line>
+                <v-list two-line :elevation="2" class="rounded-br-xl rounded-bl-none ">
                   <v-list-item>
                     <v-list-item-content max-height="100" v-if="body">
                       <v-card-text
@@ -183,17 +180,19 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
 
                   <v-divider inset></v-divider>
 
-                  <v-list-item>
-                    <v-list-item-content v-if="buttons" flex=" flex-row ">
+                  <v-list-item >
+                    <v-list-item-content v-if="buttons" flex=" flex-row " >
                       <v-btn
                         v-for="(button, i) in buttons.buttons"
                         depressed
                         :key="i"
+
                       >
                         <v-icon
                           v-if="button.type === 'PHONE_NUMBER'"
                           class="mr-1"
                           size="20"
+                          color="blue"
                         >
                           mdi-phone
                         </v-icon>
@@ -201,10 +200,11 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                           v-if="button.type === 'URL'"
                           class="mr-1"
                           size="20"
+                          color="blue"
                         >
                           mdi-web
                         </v-icon>
-                        {{ button.text }}
+                        <p class="pt-4 blue--text" color="blue">{{ button.text }}</p>
                       </v-btn>
                     </v-list-item-content>
                   </v-list-item>
@@ -213,7 +213,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
             </v-col>
           </v-app-bar>
         </v-col>
-        <v-col col="6" class="d-flex justify-center mb-6">
+        <v-col col="6" class="d-flex justify-center mb-6 mx-lg-auto">
           <v-card
             class="px-10 pb-2"
             width="600"
@@ -231,8 +231,10 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                 color="success"
                 label=""
                 hide-details="auto"
+                @change="defaultVa(i)"
               ></v-text-field>
             </div>
+
           </v-card>
         </v-col>
       </v-row>
