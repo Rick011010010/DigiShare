@@ -23,74 +23,57 @@ const footer = computed(() => {
   return selected_template.value?.components.find((e) => e.type === 'FOOTER')
 })
 
-
 // rgx of the {{1}}, {{2}} ...
 const regex = /{{\w+}}/g
 
-
-
 // the match of the rgx in the bodyTemplate
 const bodyInput = computed(() => {
-  return body?.value.text.match(regex)
+  return body.value?.text.match(regex)
 })
 // the variable indice in the default values
-let variablIndice = computed(() => {
-  return bodyInput?.value.map((n) => n.slice(2, -2) - 1)
+const variablIndice = computed(() => {
+  return bodyInput.value?.map((n) => n.slice(2, -2) - 1)
 })
 
 // default value of the bodyText
-let bodyText = computed(() => {
+const bodyText = computed(() => {
   return variablIndice?.value?.map((n) => body?.value?.example?.body_text[n])
 })
 
 function defaultVal(key: string) {
-  return bodyText.value[key.slice(2, -2) - 1][0]
+  return bodyText.value?.[+key.slice(2, -2) - 1]?.[0]
 }
 
-// the jason of the mustach data
-const vars = computed(() => {
-  const obj = {}
-  for (const key of bodyInput.value) {
-    obj[key.slice(2, -2)] = defaultVal(key)
-  }
-  return obj
-})
-
-
 // the body resulte by using the mustach method
-let output = computed(() => {
+const output = computed(() => {
   return render(body?.value.text, vars?.value)
 })
 
+// the jason of the mustach data
+const vars = ref({})
 
+// watch of the template data
+watch(selected_template, () => {
+  const obj: object = {}
+  if (bodyInput.value) {
+    for (const key of bodyInput.value) {
+      obj[key.slice(2, -2)] = defaultVal(key)
+    }
+  }
 
+  vars.value = obj
+})
 
-// function   watch: {
-//   bodyText: {
-//       handler(newBodyText) {
-//         // this will be run immediately on component creation.
-//       },
-//       // force eager callback execution
-//       immediate: true
-//     }
-//   }
+//Img url
+const url = ref('')
 
-
-// for (const key of defaultVal.value) {
-//   defaultVal(key) = inputModel(key)
-//   }
-
-// )
-
-// the result body by using replace method
-// let BodyTextRes = computed(() => {
-//   let r = body?.value.text
-//   for(const key of bodyInput.value ){
-//    r = r.replace(key,defaultVal(key))
-//   }
-//   return r
-
-// })
+//img change url
+watch(selected_template, () => {
+  const urlInput: string = header?.value.example?.header_handle[0]
+  if (header?.value.format === 'IMAGE') {
+    url.value = urlInput
+  }
+})
 
 getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
 </script>
@@ -112,15 +95,15 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
       <v-row class="">
         <v-col col="6 ">
           <v-app-bar
-
             width="390"
             height="705"
-            class="ml-16  rounded-xl pt-16 pr-2"
+            class="ml-16 rounded-xl pt-16 pr-2"
             src="/phone3.png"
             fade-img-on-scroll
             scroll-target="#scrolling-techniques-3"
             shrink-on-scroll
             prominent
+            :elevation="0"
           >
             <template v-slot:img="{ props }">
               <v-img v-bind="props" width="500" cover></v-img>
@@ -134,7 +117,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                 fab
                 height="100"
                 class="mx-auto mt-16 rounded-t-xl"
-                :elevation="4"
+                :elevation="1"
               >
                 <template v-if="header">
                   <template v-if="header.format === 'IMAGE'" height="100">
@@ -142,7 +125,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                       class="mx-auto"
                       height="100"
                       width="200"
-                      v-bind:src="header.example.header_handle[0]"
+                      v-bind:src="url"
                     ></v-img>
                   </template>
 
@@ -156,16 +139,19 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                   </template>
                 </template>
 
-                <v-list two-line :elevation="2" class="rounded-br-xl rounded-bl-none ">
+                <v-list
+                  two-line
+                  :elevation="2"
+                  class="rounded-br-xl rounded-bl-0"
+                >
                   <v-list-item>
                     <v-list-item-content max-height="100" v-if="body">
                       <v-card-text
                         class="text-h7 font-weight-thin d-inline-block"
                         style="max-width: 400px; max-height: 96px"
                       >
-                        {{ bodyInput && body.example ? output : body.text }}
+                        {{ output }}
                         <br />
-                        <!-- {{ vars }} -->
                       </v-card-text>
                     </v-list-item-content>
                   </v-list-item>
@@ -180,13 +166,12 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
 
                   <v-divider inset></v-divider>
 
-                  <v-list-item >
-                    <v-list-item-content v-if="buttons" flex=" flex-row " >
+                  <v-list-item>
+                    <v-list-item-content v-if="buttons" flex=" flex-row ">
                       <v-btn
                         v-for="(button, i) in buttons.buttons"
                         depressed
                         :key="i"
-
                       >
                         <v-icon
                           v-if="button.type === 'PHONE_NUMBER'"
@@ -204,7 +189,9 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                         >
                           mdi-web
                         </v-icon>
-                        <p class="pt-4 blue--text" color="blue">{{ button.text }}</p>
+                        <p class="pt-4 blue--text" color="blue">
+                          {{ button.text }}
+                        </p>
                       </v-btn>
                     </v-list-item-content>
                   </v-list-item>
@@ -214,27 +201,21 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
           </v-app-bar>
         </v-col>
         <v-col col="6" class="d-flex justify-center mb-6 mx-lg-auto">
-          <v-card
-            class="px-10 pb-2"
-            width="600"
-            v-if="selected_template && bodyInput"
-          >
+          <v-card class="px-10 pb-2" width="600">
             <v-card-text>
               <div>whatsapp templates</div>
-              <p class="text-h5 text--primary">modifier dans le modèle</p>
             </v-card-text>
-            <div class="">
+            <div class="" v-if="selected_template && bodyInput">
               <v-text-field
-                v-for="(input, i) in bodyText"
+                v-for="(input, i) in vars"
                 :key="i"
-                v-model="bodyText[i]"
+                v-model="vars[i]"
                 color="success"
-                label=""
+                label="body variables"
                 hide-details="auto"
-                @change="defaultVa(i)"
               ></v-text-field>
             </div>
-
+            <v-text-field v-model="url" label="Image URL"> </v-text-field>
           </v-card>
         </v-col>
       </v-row>
