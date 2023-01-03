@@ -2,7 +2,7 @@
 import { getWabaTemplates } from '@/api/waba_templates'
 import type { WabaTemplate } from '@/api/waba_templates'
 import { render } from 'mustache'
-import { ref, watch, whatchEffect, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 
 const waba_templates = ref<WabaTemplate[]>([])
 const selected_template = ref<WabaTemplate>()
@@ -32,7 +32,7 @@ const bodyInput = computed(() => {
 })
 // the variable indice in the default values
 const variablIndice = computed(() => {
-  return bodyInput.value?.map((n) => n.slice(2, -2) - 1)
+  return bodyInput.value?.map((n: string) => +n.slice(2, -2) - 1)
 })
 
 // default value of the bodyText
@@ -52,6 +52,9 @@ const output = computed(() => {
 // the jason of the mustach data
 const vars = ref({})
 
+//Img url
+const url = ref('')
+
 // watch of the template data
 watch(selected_template, () => {
   const obj: object = {}
@@ -62,18 +65,13 @@ watch(selected_template, () => {
   }
 
   vars.value = obj
-})
-
-//Img url
-const url = ref('')
-
-//img change url
-watch(selected_template, () => {
+  //img change url
   const urlInput: string = header?.value.example?.header_handle[0]
   if (header?.value.format === 'IMAGE') {
     url.value = urlInput
   }
 })
+
 
 getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
 </script>
@@ -105,7 +103,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
             prominent
             :elevation="0"
           >
-            <template v-slot:img="{ props }">
+            <template #img="{ props }">
               <v-img v-bind="props" width="500" cover></v-img>
             </template>
 
@@ -117,7 +115,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                 fab
                 height="100"
                 class="mx-auto mt-16 rounded-t-xl"
-                :elevation="1"
+                :elevation="0"
               >
                 <template v-if="header">
                   <template v-if="header.format === 'IMAGE'" height="100">
@@ -125,7 +123,7 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                       class="mx-auto"
                       height="100"
                       width="200"
-                      v-bind:src="url"
+                      :src="url"
                     ></v-img>
                   </template>
 
@@ -134,14 +132,14 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                       class="mx-auto"
                       height="100"
                       width="200"
-                      v-bind:src="header.example.pdfImg[0]"
+                      :src="header.example.pdfImg[0]"
                     ></v-img>
                   </template>
                 </template>
 
                 <v-list
                   two-line
-                  :elevation="2"
+                  :elevation="0"
                   class="rounded-br-xl rounded-bl-0"
                 >
                   <v-list-item>
@@ -215,7 +213,9 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                 hide-details="auto"
               ></v-text-field>
             </div>
-            <v-text-field v-model="url" label="Image URL"> </v-text-field>
+            <div v-if="header.format === 'IMAGE'">
+              <v-text-field v-model="url" label="Image URL"> </v-text-field>
+            </div>
           </v-card>
         </v-col>
       </v-row>

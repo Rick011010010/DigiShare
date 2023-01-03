@@ -54,7 +54,7 @@ const digi: WabaTemplate[] = [
           ],
           pdfImg:[
             'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png'
-          ]
+          ],
         },
         format: 'DOCUMENT',
         type: 'HEADER',
@@ -111,7 +111,7 @@ const digi: WabaTemplate[] = [
         example: {
           body_text: [['Hello you'],['Hel fjjhgjglo you']],
         },
-        text: '**** {{1}}, {{2}}',
+        text: '**** {{1}}, {{2}},',
         type: 'BODY',
       },
       {
@@ -315,6 +315,9 @@ const taaminy: WabaTemplate[] = [
           header_handle: [
             'https://itb.itinarea.com/storage/static/DIGISHARE%20-%20Produits.pdf',
           ],
+          pdfImg:[
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png'
+          ]
         },
         format: 'DOCUMENT',
         type: 'HEADER',
