@@ -1,6 +1,7 @@
-import { setupWorker, rest } from 'msw'
-import type { IUserData, Token } from '@/api/users'
-import { waba_templates } from '@/mocks/waba_templates'
+import {setupWorker, rest} from 'msw'
+import type {IUserData, Token} from '@/api/users'
+import {waba_templates} from '@/mocks/waba_templates'
+import {thirds} from "@/mocks/thirds";
 
 const baseURL =
   import.meta.env.VITE_API_URL ||
@@ -10,8 +11,8 @@ const url = (path: string) => {
 }
 
 const groups = [
-  { id: 1, name: 'admin' },
-  { id: 2, name: 'staff' },
+  {id: 1, name: 'admin'},
+  {id: 2, name: 'staff'},
 ]
 
 const users = [
@@ -56,7 +57,7 @@ const users = [
 
 export const worker = setupWorker(
   rest.get(url('/users/:id'), (req, res, ctx) => {
-    return res(ctx.json({ id: 99, groups: [1] }))
+    return res(ctx.json({id: 99, groups: [1]}))
   }),
   rest.get(url('/users'), (req, res, ctx) => {
     return res(ctx.json<IUserData[]>(users))
@@ -86,6 +87,15 @@ export const worker = setupWorker(
   rest.get(url('/waba_templates/:id'), (req, res, ctx) => {
     return res(
       ctx.json(waba_templates.find((g) => g.id === Number(req.params.id)))
+    )
+  }),
+  // thirds api
+  rest.get(url('/thirds'), (req, res, ctx) => {
+    return res(ctx.json(thirds))
+  }),
+  rest.get(url('/thirds/:id'), (req, res, ctx) => {
+    return res(
+      ctx.json(thirds.find((g) => g.id === Number(req.params.id)))
     )
   })
 )
