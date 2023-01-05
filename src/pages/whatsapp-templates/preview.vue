@@ -7,8 +7,8 @@ import { ref, watch, computed } from 'vue'
 const waba_templates = ref<WabaTemplate[]>([])
 const selected_template = ref<WabaTemplate>()
 
-function getType(T: string) {
-  return selected_template.value?.components.find((e) => e.type === T)
+function getType(type: string) {
+  return selected_template.value?.components.find((e) => e.type === type)
 }
 
 const body = computed(() => {
