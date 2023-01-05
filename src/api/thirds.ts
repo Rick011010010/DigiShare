@@ -38,16 +38,14 @@ export type DataObj = {
 } & any
 
 export type TagsType = {
-  object: StringOrNull,
-  id: StringOrNull,
-  name: StringOrNull,
-  slug: StringOrNull,
-  type: boolean,
-  order_column: number,
-  created_at: StringOrNull,
-  updated_at: StringOrNull,
-
-
+  object: StringOrNull
+  id: StringOrNull
+  name: StringOrNull
+  slug: StringOrNull
+  type: boolean
+  order_column: number
+  created_at: StringOrNull
+  updated_at: StringOrNull
 }
 
 
