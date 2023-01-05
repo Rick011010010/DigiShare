@@ -7,20 +7,24 @@ import { ref, watch, computed } from 'vue'
 const waba_templates = ref<WabaTemplate[]>([])
 const selected_template = ref<WabaTemplate>()
 
+function getType(T: string) {
+  return selected_template.value?.components.find((e) => e.type === T)
+}
+
 const body = computed(() => {
-  return selected_template.value?.components.find((e) => e.type === 'BODY')
+  return getType('BODY')
 })
 
 const header = computed(() => {
-  return selected_template.value?.components.find((e) => e.type === 'HEADER')
+  return getType('HEADER')
 })
 
 const buttons = computed(() => {
-  return selected_template.value?.components.find((e) => e.type === 'BUTTONS')
+  return getType('BUTTONS')
 })
 
 const footer = computed(() => {
-  return selected_template.value?.components.find((e) => e.type === 'FOOTER')
+  return getType('FOOTER')
 })
 
 // rgx of the {{1}}, {{2}} ...
@@ -71,7 +75,6 @@ watch(selected_template, () => {
     url.value = urlInput
   }
 })
-
 
 getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
 </script>
@@ -213,8 +216,8 @@ getWabaTemplates().then((promise) => (waba_templates.value = promise.data))
                 hide-details="auto"
               ></v-text-field>
             </div>
-            <div v-if="header.format === 'IMAGE'">
-              <v-text-field v-model="url" label="Image URL"> </v-text-field>
+            <div v-if="selected_template && header.format === 'IMAGE'">
+              <v-text-field v-model="url" label="Image URL"></v-text-field>
             </div>
           </v-card>
         </v-col>
