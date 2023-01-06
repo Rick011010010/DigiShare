@@ -4,8 +4,8 @@
 import { ref, watch, computed, watchEffect } from 'vue'
 import type { Third } from '@/api/thirds'
 import { getThirds, getThird } from '@/api/thirds'
-const thirdData   = ref<Third[]>([]) 
-const thirdDataById   = ref() 
+const thirdData   = ref<Third[]>([])
+const thirdDataById   = ref()
 const lding  = ref(true)
 getThirds().then((promise)=> thirdData.value = promise.data ).finally( () => {
     lding.value = false
@@ -32,7 +32,7 @@ console.log(getThird(id), 'hhhhhhhhhhhhhhhh');
 const { t } = useI18n()
 const headers: DataTableHeader[] = [
   { text: t('username'), value: 'username' },
- 
+
   { text: t('name'), value: 'name' },
   { text: t('email'), value: 'email' },
   { text: t('joinDate'), value: 'joinDate' },
@@ -49,14 +49,12 @@ const headers: DataTableHeader[] = [
   <template #item.username="{ item }">{{
               item?.first_name
             }}</template>
-  <template #item.actions="{ item }"> 
+  <template #item.actions="{ item }">
     <v-btn
     @click="dataById(item.id)"
       fab
       dark
       small
-     
-     
     >
       <v-icon dark>
         $mdi-eye
@@ -68,7 +66,7 @@ const headers: DataTableHeader[] = [
             }}</template>
 </v-data-table>
 
- 
+
       </v-col>
     </v-row>
   </v-container>

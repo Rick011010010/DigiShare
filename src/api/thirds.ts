@@ -47,10 +47,6 @@ export type TagsType = {
   created_at: StringOrNull
   updated_at: StringOrNull
 }
-
-
-
-
 export const getThird = (id: number) => service.get<Third>(`/thirds/${id}`)
 
 export const getThirds = () => service.get<Third[]>(`/thirds`)
