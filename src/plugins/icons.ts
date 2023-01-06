@@ -58,6 +58,7 @@ import {
   mdiAnimation,
   mdiBookOutline,
   mdiOpenInNew,
+  
 } from '@mdi/js'
 
 const mdi = {
@@ -114,6 +115,7 @@ const mdi = {
   mdiAnimation,
   mdiBookOutline,
   mdiOpenInNew,
+  
 }
 
 const mdIcons = mapKeys(mdi, (v, k) => kebabCase(k))
