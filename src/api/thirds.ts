@@ -12,8 +12,8 @@ export type Third = {
   phone: StringOrNull
   birthday: StringOrNull
   address: StringOrNull
-  created_at: StringOrNull
-  updated_at: StringOrNull
+  created_at: string
+  updated_at: string
   company_id: StringOrNull
   source: any[]
   status: boolean

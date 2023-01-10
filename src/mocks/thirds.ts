@@ -11,7 +11,7 @@ export const thirds: Third[] = [
     phone: '0653300274',
     birthday: '1999-03-14',
     address: '71 azib derai safi',
-    created_at: '2023-01-05T13:25:22.000000Z',
+    created_at: '2022-01-05T13:25:22.000000Z',
     updated_at: '2023-01-05T13:25:22.000000Z',
     company_id: '6wgqj7l4azlyb4vd',
     source: [],
@@ -26,6 +26,24 @@ export const thirds: Third[] = [
       key: 'safi',
       name: 'Safi',
     },
+    tickets: [
+      {
+        name: 'Premier Connexion',
+        status: 'Panding',
+        date: '2022-06-06T13:20:03.000000Z',
+        channel: 'SMS',
+        creationMode: 'automatically',
+        language: 'ar',
+      },
+      {
+        name: 'Douxieme Connexion',
+        status: 'Done',
+        date: '2023-06-06T13:20:03.000000Z',
+        channel: 'Whatsapp',
+        creationMode: 'automatically',
+        language: 'ar',
+      }
+    ],
     country_id: null,
     state_id: null,
     is_company: false,
@@ -144,8 +162,15 @@ export const thirds: Third[] = [
     groups: [],
     platformLinks: null,
     company: null,
-    $isDirty: true,
-    $isNew: false,
+    tickets: [
+      {
+        name:'Premier Connexion',
+        status:'Panding',
+        date:'2022-06-06T13:20:03.000000Z',
+        channel:'SMS'
+      }
+    ]
+
   },
   {
     id: 3,
