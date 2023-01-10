@@ -39,11 +39,18 @@ export const thirds: Third[] = [
         name: 'Douxieme Connexion',
         status: 'Done',
         date: '2023-06-06T13:20:03.000000Z',
-        channel: 'Whatsapp',
+        channel: 'whatsapp',
         creationMode: 'automatically',
         language: 'ar',
       }
     ],
+    note:[
+      {
+      id: '1',
+      content: ' note content test',
+      date: '2023-06-06T13:20:03.000000Z',
+    }
+  ],
     country_id: null,
     state_id: null,
     is_company: false,

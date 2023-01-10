@@ -24,6 +24,11 @@ const eventTyps: Record<
     icon: 'mdi-ticket-confirmation-outline',
     title: 'Tickets:',
   },
+  note: {
+    color: '#0096b1',
+    icon: 'mdi-calendar-text',
+    title: 'Note',
+  },
 }
 // const items = ref<any>([
 //   {
@@ -66,10 +71,18 @@ const events = computed(() => {
   if (!third.value) {
     return
   }
+  const noteEvent: EventItemType[] = (third.value?.note ?? []).map((t) => ({
+    key: 'note',
+    title: 'Note',
+    date: t.date,
+    details: t,
+    name: t.name,
+    content: t.content,
+  }))
   const ticketEvent: EventItemType[] = (third.value?.tickets ?? []).map(
     (t) => ({
       key: 'tickets',
-      title: 'New ticket was created',
+      title: 'Ticket was created at',
       date: t.date,
       details: t,
       name: t.name,
@@ -82,7 +95,7 @@ const events = computed(() => {
     { key: 'updated', date: third.value!.updated_at, title: 'updated at' },
   ]
   console.log(ticketEvent, 'tetddd')
-  return [...ticketEvent, ...thirdEvent]
+  return [...ticketEvent, ...thirdEvent, ...noteEvent]
     .sort(function (a, b) {
       // Turn your strings into dates, and then subtract them
       // to get a value that is either negative, positive, or zero.
@@ -101,20 +114,32 @@ const events = computed(() => {
       fill-dot
     >
       <v-card :color="event.style.color" dark>
-        <v-card-title class="text-h6">{{ event.title }}</v-card-title>
-        <v-card-text class="white text--primary">
+        <v-card-title class="text-h6 d-flex justify-space-between">
+          {{ event.title }}:
+          <div class="text-right">
+            <v-icon>mdi-calendar-range</v-icon> {{ event.date.slice(0, 10) }}-
+            <v-icon>mdi-clock-outline</v-icon>{{ event.date.slice(11, 19) }}
+          </div>
           <template v-if="event.key === 'tickets'">
             <div>
-              <p>Name: {{ event.name }}</p>
-              <p>Channel: {{ event.channel }}</p>
-              <p>Status: {{ event.status }}</p>
+              <v-icon v-if="event.channel === 'SMS'" large>
+                mdi-message-processing</v-icon
+              ><v-icon v-if="event.channel === 'whatsapp'" large
+                >mdi-whatsapp</v-icon
+              ><v-icon v-if="event.channel === 'messenger'" large
+                >mdi-facebook-messenger</v-icon
+              >
+            </div>
+            <div>Status: {{ event.status }}</div>
+          </template>
+        </v-card-title>
+        <v-card-text class="white text--primary" v-if="event.key === 'note'">
+          <template>
+            <p>{{ event.content }}</p>
+            <div>
+
             </div>
           </template>
-
-          <p>
-            Time:{{ event.date.slice(11, 19) }} - Date:
-            {{ event.date.slice(0, 10) }}
-          </p>
         </v-card-text>
       </v-card>
     </v-timeline-item>
