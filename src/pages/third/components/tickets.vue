@@ -9,6 +9,6 @@ import type { Third } from '@/api/thirds'
 <template>
 
 
-<p>plateforme</p>
+<p>Tickets</p>
 
 </template>

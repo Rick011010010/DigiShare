@@ -18,6 +18,21 @@ export const thirds: Third[] = [
     status: false,
     premium: false,
     verified: false,
+    conversations: [
+      {
+        id: 'n84bp7mygemydovg',
+        title: 'Hamza Jebrane - Innodis whatsapp 33',
+        created_at: '2023-01-06T23:57:26.000000Z',
+        updated_at: '2023-01-09T14:05:42.000000Z',
+        content: ' conversation content test (text or links)',
+      },
+      {
+        id: 'dxg6ynlpx8m87awb',
+        title: 'Hamza Jebrane - Innodis whatsapp 33',
+        created_at: '2023-01-09T14:05:57.000000Z',
+        updated_at: '2023-01-09T16:03:22.000000Z',
+      }
+    ],
     city: {
       id: 'yw9zbnm39moxq564',
       data: {

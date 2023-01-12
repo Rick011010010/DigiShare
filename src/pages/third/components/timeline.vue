@@ -29,6 +29,11 @@ const eventTyps: Record<
     icon: 'mdi-calendar-text',
     title: 'Note',
   },
+  conversations: {
+    color: '#0099A4',
+    icon: 'mdi-chat ',
+    title: 'conversation',
+  },
 }
 // const items = ref<any>([
 //   {
@@ -66,14 +71,14 @@ type EventItemType = {
   date: string
   title: string
   details?: object
-}
+} & any
 const events = computed(() => {
   if (!third.value) {
     return
   }
   const noteEvent: EventItemType[] = (third.value?.note ?? []).map((t) => ({
     key: 'note',
-    title: 'Note',
+    title: 'Note:',
     date: t.date,
     details: t,
     name: t.name,
@@ -82,7 +87,7 @@ const events = computed(() => {
   const ticketEvent: EventItemType[] = (third.value?.tickets ?? []).map(
     (t) => ({
       key: 'tickets',
-      title: 'Ticket was created at',
+      title: 'Ticket was created at:',
       date: t.date,
       details: t,
       name: t.name,
@@ -90,12 +95,22 @@ const events = computed(() => {
       channel: t.channel,
     })
   )
+  const conversationEvent: EventItemType[] = (
+    third.value?.conversations ?? []
+  ).map((t) => ({
+    key: 'conversations',
+    title: 'conversation: ' + t.title,
+    date: t.updated_at,
+    details: t,
+    name: t.name,
+    content: t.content,
+  }))
   const thirdEvent: EventItemType[] = [
     { key: 'created', date: third.value!.created_at, title: 'Created at' },
-    { key: 'updated', date: third.value!.updated_at, title: 'updated at' },
+    { key: 'updated', date: third.value!.updated_at, title: 'Updated at' },
   ]
   console.log(ticketEvent, 'tetddd')
-  return [...ticketEvent, ...thirdEvent, ...noteEvent]
+  return [...ticketEvent, ...thirdEvent, ...noteEvent, ...conversationEvent]
     .sort(function (a, b) {
       // Turn your strings into dates, and then subtract them
       // to get a value that is either negative, positive, or zero.
@@ -113,9 +128,9 @@ const events = computed(() => {
       :icon="event.style.icon"
       fill-dot
     >
-      <v-card :color="event.style.color" dark>
+      <v-card :color="event.style.color" dark v-if="" width="550">
         <v-card-title class="text-h6 d-flex justify-space-between">
-          {{ event.title }}:
+          {{ event.title }}
           <div class="text-right">
             <v-icon>mdi-calendar-range</v-icon> {{ event.date.slice(0, 10) }}-
             <v-icon>mdi-clock-outline</v-icon>{{ event.date.slice(11, 19) }}
@@ -133,12 +148,19 @@ const events = computed(() => {
             <div>Status: {{ event.status }}</div>
           </template>
         </v-card-title>
-        <v-card-text class="white text--primary" v-if="event.key === 'note'">
+        <v-card-text v-if="event.key === 'note'" class="white text--primary">
           <template>
             <p>{{ event.content }}</p>
-            <div>
-
-            </div>
+            <div></div>
+          </template>
+        </v-card-text>
+        <v-card-text
+          v-if="event.key === 'conversations'"
+          class="white text--primary"
+        >
+          <template>
+            <p>{{ event.content }}</p>
+            <div></div>
           </template>
         </v-card-text>
       </v-card>

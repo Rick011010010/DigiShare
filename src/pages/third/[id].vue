@@ -7,8 +7,9 @@ import timelineVue from './components/timeline.vue'
 import activityVue from './components/activity.vue'
 import campaignsVue from './components/campaigns.vue'
 import interactionsVue from './components/interactions.vue'
-import platformLinksVue from './components/platformLinks.vue'
+import ticketsVue from './components/tickets.vue'
 import attachementVue from './components/attachement.vue'
+import conversationVue  from './components/conversation.vue'
 
 const route = useRoute()
 const third: Ref<Third> = ref({})
@@ -32,20 +33,21 @@ onMounted(() => {
       <v-col cols="9">
         <v-tabs fixed-tabs>
           <v-tab>Timeline</v-tab>
-          <v-tab>Activity</v-tab>
-          <v-tab>Interactions</v-tab>
-          <v-tab>Campaigns</v-tab>
-          <v-tab>Platform links </v-tab>
-          <v-tab>Attachments</v-tab>
+          <v-tab>Tickets</v-tab>
+          <v-tab>Conversation</v-tab>
+          <v-tab disabled>Campaigns</v-tab>
+          <v-tab disabled>Attachments</v-tab>
+          <v-tab disabled>Interactions</v-tab>
+          <v-tab disabled>Activity</v-tab>
+
           <v-tab-item><timelineVue /></v-tab-item>
-          <v-tab-item><activityVue /></v-tab-item>
-          <v-tab-item><interactionsVue /></v-tab-item>
+          <v-tab-item><ticketsVue /></v-tab-item>
+          <v-tab-item><conversationVue /></v-tab-item>
           <v-tab-item><campaignsVue /></v-tab-item>
-          <v-tab-item><platformLinksVue /></v-tab-item>
           <v-tab-item><attachementVue /></v-tab-item>
+          <v-tab-item><interactionsVue /></v-tab-item>
+          <v-tab-item><activityVue /></v-tab-item>
         </v-tabs>
-
-
       </v-col>
     </v-row>
   </v-app>
