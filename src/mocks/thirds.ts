@@ -22,8 +22,8 @@ export const thirds: Third[] = [
       {
         id: 'n84bp7mygemydovg',
         title: 'Hamza Jebrane - Innodis whatsapp 33',
-        created_at: '2023-01-06T23:57:26.000000Z',
-        updated_at: '2023-01-09T14:05:42.000000Z',
+        created_at: '2022-01-06T23:57:26.000000Z',
+        updated_at: '2022-01-09T14:05:42.000000Z',
         content: ' conversation content test (text or links)',
       },
       {
@@ -31,6 +31,7 @@ export const thirds: Third[] = [
         title: 'Hamza Jebrane - Innodis whatsapp 33',
         created_at: '2023-01-09T14:05:57.000000Z',
         updated_at: '2023-01-09T16:03:22.000000Z',
+        content: ' conversation content test (text or links)',
       }
     ],
     city: {
@@ -85,8 +86,8 @@ export const thirds: Third[] = [
       employee: null,
       function: null,
       location: {
-        latitude: null,
-        longitude: null,
+        latitude: 35.79345,
+        longitude: -5.848964,
       },
       supplier: null,
       company_name: null,
@@ -158,8 +159,8 @@ export const thirds: Third[] = [
       employee: null,
       function: null,
       location: {
-        latitude: null,
-        longitude: null,
+        latitude: 35.79345,
+        longitude: -5.848964,
       },
       supplier: null,
       company_name: null,

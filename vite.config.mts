@@ -59,7 +59,7 @@ export default defineConfig({
         },
       ],
       dts: 'src/auto-imports.d.ts',
-      dirs: ['src/stores'],
+      dirs: ['src/stores', 'src/composables'],
       vueTemplate: false,
     }),
     createSvgPlugin(),

@@ -27,7 +27,7 @@ onMounted(() => {
   <v-app id="inspire">
     <v-row class="mt-2">
       <v-col cols="3">
-        <userDetailsVue />
+        <userDetailsVue :bigThird="third"/>
       </v-col>
 
       <v-col cols="9">

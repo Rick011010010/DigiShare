@@ -106,8 +106,8 @@ const events = computed(() => {
     content: t.content,
   }))
   const thirdEvent: EventItemType[] = [
-    { key: 'created', date: third.value!.created_at, title: 'Created at' },
-    { key: 'updated', date: third.value!.updated_at, title: 'Updated at' },
+    { key: 'created', date: third.value!.created_at, title: 'Created at:' },
+    { key: 'updated', date: third.value!.updated_at, title: 'Updated at:' },
   ]
   console.log(ticketEvent, 'tetddd')
   return [...ticketEvent, ...thirdEvent, ...noteEvent, ...conversationEvent]
@@ -128,7 +128,7 @@ const events = computed(() => {
       :icon="event.style.icon"
       fill-dot
     >
-      <v-card :color="event.style.color" dark v-if="" width="550">
+      <v-card :color="event.style.color" dark width="550">
         <v-card-title class="text-h6 d-flex justify-space-between">
           {{ event.title }}
           <div class="text-right">

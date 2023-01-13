@@ -31,6 +31,7 @@
     "screenfull": "^6.0.2",
     "vue": "^2.7.14",
     "vue-echarts": "^6.2.3",
+    "vue-googlemaps": "^0.1.2",
     "vue-i18n": "8.27.2",
     "vue-i18n-bridge": "^9.2.2",
     "vue-router": "^3.6.5",
