@@ -51,14 +51,7 @@ export const thirds: Third[] = [
         creationMode: 'automatically',
         language: 'ar',
       },
-      {
-        name: 'Douxieme Connexion',
-        status: 'Done',
-        date: '2023-06-06T13:20:03.000000Z',
-        channel: 'whatsapp',
-        creationMode: 'automatically',
-        language: 'ar',
-      }
+   
     ],
     note:[
       {
@@ -251,6 +244,14 @@ export const thirds: Third[] = [
       telegram_ids: null,
       instagram_ids: null,
       additional_info: null,
+      tickets: [
+        {
+          name:'Premier Connexion',
+          status:'Panding',
+          date:'2022-06-06T13:20:03.000000Z',
+          channel:'SMS'
+        }
+      ]
     },
     tags: [
       {
@@ -270,4 +271,5 @@ export const thirds: Third[] = [
     $isDirty: true,
     $isNew: false,
   },
+  
 ]

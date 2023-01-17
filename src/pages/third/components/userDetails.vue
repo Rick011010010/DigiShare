@@ -1,14 +1,7 @@
 <script setup lang="ts">
 import AppGoogleMaps from '@/components/AppGoogleMaps.vue'
-import {
-  ref,
-  watch,
-  computed,
-  watchEffect,
-  PropType,
-  onMounted,
-  Ref,
-} from 'vue'
+import { ref, watch, computed, watchEffect, onMounted } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { getThirds, getThird } from '@/api/thirds'
 import type { Third } from '@/api/thirds'
 // <<<<<<<<<<< REFS >>>>>>>>>>>
@@ -45,7 +38,7 @@ const generalInfos = computed(() => {
       value: props.bigThird.verified ? 'Verified' : 'Not Verified',
       icon: 'mdi-check-decagram',
     },
-    { value: props.bigThird.active, icon: 'mdi-account-badge' },
+    { value: props.bigThird?.active, icon: 'mdi-account-badge' },
     {
       value: props.bigThird.premium ? 'Premium' : 'Not Premium',
       icon: 'mdi-crown',
@@ -99,6 +92,8 @@ const groupes = computed(() => {
     { value: props.bigThird.zone, icon: 'mdi-calendar-month' },
   ]
 })
+
+const ticketsLength: Ref<object[]> = ref()
 
 const expastionPanels = computed(() => {
   return [
@@ -154,6 +149,7 @@ const nameLetter = computed(() => {
 watch(generalInfos, () => {
   img.value = props.bigThird?.data?.avatar
   console.log(img.value, 'hhhhhhhhhhhhhhh')
+  ticketsLength.value = props.bigThird?.tickets.length
 })
 const ite = ['default', 'ticket', 'conversation']
 const selectModel = ref<string>('default')
@@ -173,7 +169,6 @@ const selectModel = ref<string>('default')
         </v-col>
       </v-row>
     </template>
-
     <v-card class="mx-auto" elevation="0" max-width="400">
       <template v-if="selectModel !== 'conversation'">
         <v-col class="text-center">
@@ -226,7 +221,7 @@ const selectModel = ref<string>('default')
                         >
                           <template v-if="type !== 'Individual'">
                             <v-list-item-icon>
-                              <v-icon small v-if="icon" v-text="icon"></v-icon>
+                              <v-icon v-if="icon" v-text="icon"></v-icon>
                               <span class="" v-else-if="text">
                                 {{ text }} :
                               </span>
@@ -234,7 +229,10 @@ const selectModel = ref<string>('default')
 
                             <v-list-item-content>
                               <v-list-item-title>
-                                <div v-if="type === 'tags'" class="text-wrap">
+                                <div
+                                  v-if="type === 'tags'"
+                                  class="text-wrap body-3"
+                                >
                                   <v-chip> {{ value?.name }} </v-chip>
                                   <v-chip class="ml-2">
                                     {{ value?.slug }}
@@ -244,7 +242,7 @@ const selectModel = ref<string>('default')
                                   v-else-if="type === 'location'"
                                   class="rounded-xl"
                                 >
-                                  <div class=" rounded-xl">
+                                  <div class="rounded-xl">
                                     <app-google-maps
                                       :position_data="value"
                                       style="
@@ -256,7 +254,7 @@ const selectModel = ref<string>('default')
                                   </div>
                                 </div>
                                 <div v-else>
-                                  <span class="body-2">
+                                  <span class="body-3 text-wrap">
                                     {{ value ?? '- -' }}
                                   </span>
                                 </div>
@@ -275,6 +273,17 @@ const selectModel = ref<string>('default')
             </v-row>
           </v-col>
         </v-row>
+      </div>
+      <div class="d-flex justify-center" v-if="selectModel === 'ticket'">
+        <p class="mb-2 blue--text" style="bottom: 5px">
+          {{
+            ticketsLength > 1
+              ? `${ticketsLength} Tickets`
+              : ticketsLength == 1
+              ? `${ticketsLength} Ticket`
+              : ' 0 Ticket'
+          }}
+        </p>
       </div>
     </v-card>
   </v-container>
